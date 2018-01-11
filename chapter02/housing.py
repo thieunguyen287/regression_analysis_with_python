@@ -59,4 +59,14 @@ linear_regression = smf.ols(formula='target ~ RM', data=dataset)
 fitted_model = linear_regression.fit()
 summary = fitted_model.summary()
 print summary
-
+print fitted_model.params
+# print zip(fitted_model.predict(X), dataset['target'])
+predictions = fitted_model.predict(X)
+mean_mse = np.mean((dataset['target'] - dataset['target'].mean())**2)
+model_mse = np.mean((dataset['target'] - predictions)**2)
+print (mean_mse - model_mse) / mean_mse
+print (pearsonr(dataset['RM'], dataset['target'])[0]) ** 2
+plt.plot(dataset['target'])
+plt.plot(dataset['RM'])
+plt.plot(fitted_model.predict(X))
+plt.show()
